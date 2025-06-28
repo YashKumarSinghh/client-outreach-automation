@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email A/B Tester</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #eef; }
+    .container { background: white; padding: 20px; border-radius: 10px; max-width: 800px; margin: auto; }
+    h2 { color: #222; }
+    textarea { width: 100%; height: 80px; margin-bottom: 10px; }
+    button { padding: 10px; margin-top: 10px; }
+    .result { margin-top: 20px; background: #f9f9f9; padding: 10px; border: 1px dashed #aaa; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sales Email A/B Test Simulator</h2>
+    <label>Email A:</label>
+    <textarea id="emailA">Subject: Try our new AI-powered CRM today!</textarea>
+    <label>Email B:</label>
+    <textarea id="emailB">Subject: Scale your client outreach with smart automation</textarea>
+    <button onclick="runTest()">Simulate A/B Test</button>
+    <div class="result" id="resultBox"></div>
+  </div>
+
+  <script>
+    function runTest() {
+      const openRateA = Math.floor(Math.random() * 21) + 60; // 60-80%
+      const openRateB = Math.floor(Math.random() * 21) + 60;
+      const result = `Open Rate Simulation:\n- Email A: ${openRateA}%\n- Email B: ${openRateB}%\n\nWinner: ${openRateA > openRateB ? 'Email A' : 'Email B'}`;
+      document.getElementById('resultBox').innerText = result;
+    }
+  </script>
+</body>
+</html>

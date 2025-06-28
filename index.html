@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mini CRM - Lead Manager</title>
+  <style>
+    body { font-family: Arial; margin: 20px; background: #f4f4f4; }
+    h1 { color: #333; }
+    .container { background: white; padding: 20px; border-radius: 8px; max-width: 700px; margin: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    input, select, button { margin: 10px 0; padding: 8px; width: 100%; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #eee; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Client Outreach Tracker</h1>
+    <input type="text" id="name" placeholder="Client Name" required>
+    <input type="text" id="source" placeholder="Lead Source (Email/Call/etc)">
+    <select id="status">
+      <option value="Not Contacted">Not Contacted</option>
+      <option value="Contacted">Contacted</option>
+      <option value="Warm">Warm</option>
+      <option value="Converted">Converted</option>
+      <option value="Lost">Lost</option>
+    </select>
+    <button onclick="addLead()">Add Lead</button>
+
+    <table id="leadTable">
+      <tr><th>Name</th><th>Source</th><th>Status</th><th>Actions</th></tr>
+    </table>
+  </div>
+
+  <script>
+    const leads = JSON.parse(localStorage.getItem('leads')) || [];
+
+    function renderLeads() {
+      const table = document.getElementById('leadTable');
+      table.innerHTML = '<tr><th>Name</th><th>Source</th><th>Status</th><th>Actions</th></tr>';
+      leads.forEach((lead, index) => {
+        const row = `<tr>
+          <td>${lead.name}</td>
+          <td>${lead.source}</td>
+          <td>${lead.status}</td>
+          <td><button onclick="removeLead(${index})">Delete</button></td>
+        </tr>`;
+        table.innerHTML += row;
+      });
+    }
+
+    function addLead() {
+      const name = document.getElementById('name').value;
+      const source = document.getElementById('source').value;
+      const status = document.getElementById('status').value;
+      if (name === '') return alert("Client name is required.");
+      leads.push({ name, source, status });
+      localStorage.setItem('leads', JSON.stringify(leads));
+      renderLeads();
+    }
+
+    function removeLead(index) {
+      leads.splice(index, 1);
+      localStorage.setItem('leads', JSON.stringify(leads));
+      renderLeads();
+    }
+
+    renderLeads();
+  </script>
+</body>
+</html>
